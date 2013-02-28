@@ -44,7 +44,7 @@
 //	#define OPC_USE_TREE_COHERENCE
 
 	//! Use callbacks or direct pointers. Using callbacks might be a bit slower (but probably not much)
-//	#define OPC_USE_CALLBACKS
+	#define OPC_USE_CALLBACKS
 
 	//! Support triangle and vertex strides or not. Using strides might be a bit slower (but probably not much)
 	//! HINT: Enable strides only if your vertices are NOT "tighly packed", ie, there are other info (not only
@@ -53,7 +53,7 @@
 	//!		  OpenGL vertex arrays, you should understand this fine.
 	//!		  Thus, if you always have an array of 'xzy' coordinates and an array for indices, it could be better
 	//!		  if you disable strides.
-	#define OPC_USE_STRIDE
+//	#define OPC_USE_STRIDE
 
 	//! Discard negative pointer in vanilla trees
 	#define OPC_NO_NEG_VANILLA_TREE
