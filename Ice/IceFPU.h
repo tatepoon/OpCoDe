@@ -37,13 +37,17 @@
 		udword FloatBits = IR(x)&0x7fffffff;
 		return FR(FloatBits);
 	}
-
+#include <immintrin.h>
+//! SSE square root for floating-point values. (ForserX)
 	//! Fast square root for floating-point values.
 	inline_ float FastSqrt(float square)
 	{
-#ifdef _MSC_VER
-			float retval;
-
+#ifdef __SSE__
+			float *retval;
+			_mm_store_ss(retval, _mm_sqrt_ss(_mm_load_ss(square)));
+//			compiles to movss, sqrtss, movss
+			return *retval;
+#elif !defined(_M_X64)
 			__asm {
 					mov             eax, square
 					sub             eax, 0x3F800000
@@ -181,7 +185,7 @@
 	{
 		return x*x < epsilon;
 	}
-
+#ifdef OPC_USE_FCOMI
 	#define FCOMI_ST0	_asm	_emit	0xdb	_asm	_emit	0xf0
 	#define FCOMIP_ST0	_asm	_emit	0xdf	_asm	_emit	0xf0
 	#define FCMOVB_ST0	_asm	_emit	0xda	_asm	_emit	0xc0
@@ -295,7 +299,7 @@
 		return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
 #endif
 	}
-
+#endif
 	inline_ int ConvertToSortable(float f)
 	{
 		int& Fi = (int&)f;
